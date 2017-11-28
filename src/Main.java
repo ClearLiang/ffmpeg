@@ -1,12 +1,20 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
     private final static String VIDEOPATH = "G:\\ffmpeg\\input\\123.mp4";
+    static Date date = new Date();
+    static String time = String.valueOf(date.getTime());
+
+    private final static String StringValue = "ffmpeg -re -i \"D:\\download\\film\\aqgy\\02.mp4\" -vcodec libx264 -vprofile baseline -acodec aac  \n" +
+            " -ar 44100 -strict -2 -ac 1 -f flv -s 1280x720 -q 10 rtmp://server:1935/  \n" +
+            "myapp/test1  ";
 
     public static void main(String[] args) {
+        System.out.println("time时间是："+time);
         if (!checkfile(VIDEOPATH)) {   //判断路径是不是一个文件
             System.out.println(VIDEOPATH + " is not file");
             return;
@@ -94,7 +102,7 @@ public class Main {
         commend.add("-of");
         commend.add("avi");
         commend.add("-o");
-        commend.add("G:\\ffmpeg\\input\\001.avi");
+        commend.add("G:\\ffmpeg\\input\\"+time+".avi");
         try {
             //调用线程命令启动转码
             ProcessBuilder builder = new ProcessBuilder();
@@ -133,7 +141,8 @@ public class Main {
         commend.add("15");
         commend.add("-s");                          //指定分辨率
         commend.add("600x500");
-        commend.add("g:\\ffmpeg\\output\\a.flv");   //指定输出文件
+        commend.add("rtmp://10.0.0.196:1935/myapp/test1");
+        //commend.add("g:\\ffmpeg\\output\\a.flv");   //指定输出文件
 
         try {
             Runtime runtime = Runtime.getRuntime();
